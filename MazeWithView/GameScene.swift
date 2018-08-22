@@ -82,11 +82,11 @@ class GameScene: SKScene {
     
     override func keyDown(with event: NSEvent) {
         switch event.keyCode {
-        case 0x31:
+        
+        default:
             if let label = self.label {
                 label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
             }
-        default:
             print("keyDown: \(event.characters!) keyCode: \(event.keyCode)")
         }
     }
