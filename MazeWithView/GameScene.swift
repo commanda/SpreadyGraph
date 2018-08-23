@@ -27,7 +27,7 @@ class GameScene: SKScene {
     
     private func createGraph() {
         
-        let numNodes = 5 + arc4random_uniform(10)
+        let numNodes = 10 + arc4random_uniform(30)
         var collection = [MazeNode]()
         for i in 0..<numNodes {
             let n = MazeNode(name: "\(i)")
@@ -57,7 +57,7 @@ class GameScene: SKScene {
         let ylb = -screenHeight * 0.5
         
         graph.nodes.forEach { (mn: MazeNode) in
-            let w = (screenWidth + self.size.height) * 0.05
+            let w:CGFloat = 20.0
             
             
             let rect = CGRect(x: xlb + CGFloat(arc4random_uniform(UInt32(screenWidth - w))),
@@ -132,8 +132,8 @@ class GameScene: SKScene {
         }
     }
     
-    private let repulsion_scalar: CGFloat = 200.0
-    private let attraction_scalar: CGFloat = 0.010
+    private let repulsion_scalar: CGFloat = 100.0
+    private let attraction_scalar: CGFloat = 0.030
     private let velocity_scalar: CGFloat = 0.70
     
     private func spreadOut() {
