@@ -18,7 +18,39 @@ class GameScene: SKScene {
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
+    private var nodes = [SKShapeNode]()
+    
+    private let colors = [SKColor.green, SKColor.cyan, SKColor.magenta, SKColor.blue]
+    
     override func sceneDidLoad() {
+        self.lastUpdateTime = 0
+        
+        let screenWidth = self.size.width
+        let xlb = -screenWidth*0.5
+        let xup = screenWidth*0.5
+        let xRange = xlb..<xup
+        let screenHeight = self.size.height
+        let ylb = -screenHeight*0.5
+        let yup = screenHeight*0.5
+        let yRange = ylb..<yup
+        
+        func randomInRange(r: Range<CGFloat>) -> CGFloat {
+            return r.lowerBound + CGFloat(arc4random_uniform(UInt32(r.upperBound)))
+        }
+        
+        (1...10).forEach { (i: Int) in
+            let w = (screenWidth + self.size.height) * 0.05
+            let node = SKShapeNode.init(ellipseIn: CGRect(x: randomInRange(r: xRange), y: randomInRange(r: yRange), width: w, height: w))
+            node.lineWidth = 2.5
+            node.strokeColor = colors.randomElement()!
+            node.fillColor = colors.randomElement()!
+            nodes.append(node)
+            self.addChild(node)
+        }
+        
+    }
+    
+    func OLDsceneDidLoad() {
         
         self.lastUpdateTime = 0
         

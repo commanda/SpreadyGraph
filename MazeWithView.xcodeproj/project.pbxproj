@@ -16,6 +16,8 @@
 		37FAA899212E018F000BFFB3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37FAA897212E018F000BFFB3 /* Main.storyboard */; };
 		37FAA8A5212E018F000BFFB3 /* MazeWithViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA8A4212E018F000BFFB3 /* MazeWithViewTests.swift */; };
 		37FAA8B0212E018F000BFFB3 /* MazeWithViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA8AF212E018F000BFFB3 /* MazeWithViewUITests.swift */; };
+		37FAA8FD212E0629000BFFB3 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA8FB212E0629000BFFB3 /* Graph.swift */; };
+		37FAA8FE212E0629000BFFB3 /* MazeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA8FC212E0629000BFFB3 /* MazeNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		37FAA8AB212E018F000BFFB3 /* MazeWithViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MazeWithViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37FAA8AF212E018F000BFFB3 /* MazeWithViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeWithViewUITests.swift; sourceTree = "<group>"; };
 		37FAA8B1212E018F000BFFB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37FAA8FB212E0629000BFFB3 /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
+		37FAA8FC212E0629000BFFB3 /* MazeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MazeNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,8 @@
 		37FAA88A212E018C000BFFB3 /* MazeWithView */ = {
 			isa = PBXGroup;
 			children = (
+				37FAA8FB212E0629000BFFB3 /* Graph.swift */,
+				37FAA8FC212E0629000BFFB3 /* MazeNode.swift */,
 				37FAA88B212E018C000BFFB3 /* AppDelegate.swift */,
 				37FAA88D212E018C000BFFB3 /* GameScene.sks */,
 				37FAA88F212E018C000BFFB3 /* Actions.sks */,
@@ -265,7 +271,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37FAA8FD212E0629000BFFB3 /* Graph.swift in Sources */,
 				37FAA894212E018C000BFFB3 /* ViewController.swift in Sources */,
+				37FAA8FE212E0629000BFFB3 /* MazeNode.swift in Sources */,
 				37FAA892212E018C000BFFB3 /* GameScene.swift in Sources */,
 				37FAA88C212E018C000BFFB3 /* AppDelegate.swift in Sources */,
 			);
