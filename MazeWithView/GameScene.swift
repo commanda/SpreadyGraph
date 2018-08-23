@@ -30,6 +30,7 @@ class GameScene: SKScene {
     
     private func createGraph() {
         
+        
         let frank = MazeNode(name: "Frank")
         let sarah = MazeNode(name: "Sarah")
         let jeanine = MazeNode(name: "Jeanine")
@@ -45,12 +46,14 @@ class GameScene: SKScene {
         kim.addSibling(gianni)
         
         graph = Graph(with: [lawrence, frank, sarah, jeanine, gianni, kim])
+        
     }
     
-    override func sceneDidLoad() {
-        self.lastUpdateTime = 0
+    private func visualizeGraph() {
         
-        createGraph()
+        
+        mazeNodesToShapes.values.forEach { $0.removeFromParent() }
+        mazeNodesToShapes.removeAll()
         
         let screenWidth = self.size.width
         let xlb = -screenWidth * 0.5
@@ -76,17 +79,17 @@ class GameScene: SKScene {
             
             mazeNodesToShapes[mn] = node
         }
-        
     }
     
-    func touchUp(atPoint pos : CGPoint) {
-        graph.reset()
-        graph.carveMaze()
-        print(graph)
-        
+    override func sceneDidLoad() {
+        self.lastUpdateTime = 0
+        resetGraph()
+    }
+    
+    private func visualizeLines() {
         lines.forEach { $0.removeFromParent() }
         lines.removeAll()
-
+        
         graph.nodes.forEach { (mn: MazeNode) in
             
             let mnShape = mazeNodesToShapes[mn]!
@@ -105,7 +108,18 @@ class GameScene: SKScene {
                 lines.append(line)
             })
         }
-        
+    }
+    
+    private func resetGraph() {
+        createGraph()
+        graph.reset()
+        graph.carveMaze()
+        visualizeGraph()
+        visualizeLines()
+    }
+    
+    func touchUp(atPoint pos : CGPoint) {
+        resetGraph()
     }
     
     override func mouseUp(with event: NSEvent) {
