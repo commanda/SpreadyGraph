@@ -24,11 +24,11 @@ class GameScene: SKScene {
     
     private var graph: Graph!
     
-    override func sceneDidLoad() {
-        self.lastUpdateTime = 0
-        
-        
-        print("start")
+    private var lines = [SKShapeNode]()
+    
+    private var mazeNodesToShapes = [MazeNode: SKShapeNode]()
+    
+    private func createGraph() {
         
         let frank = MazeNode(name: "Frank")
         let sarah = MazeNode(name: "Sarah")
@@ -45,7 +45,12 @@ class GameScene: SKScene {
         kim.addSibling(gianni)
         
         graph = Graph(with: [lawrence, frank, sarah, jeanine, gianni, kim])
-
+    }
+    
+    override func sceneDidLoad() {
+        self.lastUpdateTime = 0
+        
+        createGraph()
         
         let screenWidth = self.size.width
         let xlb = -screenWidth * 0.5
@@ -68,64 +73,39 @@ class GameScene: SKScene {
             let text = SKLabelNode(attributedText: NSAttributedString(string: mn.name, attributes: [.font: NSFont.boldSystemFont(ofSize: 20),
                                                                                                     .foregroundColor: SKColor.green]))
             node.addChild(text)
-        }
-        
-    }
-    
-    func OLDsceneDidLoad() {
-        
-        self.lastUpdateTime = 0
-        
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//scrappy") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
-        
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
             
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
+            mazeNodesToShapes[mn] = node
         }
-    }
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
+        
     }
     
     func touchUp(atPoint pos : CGPoint) {
         graph.reset()
         graph.carveMaze()
         print(graph)
-    }
-    
-    override func mouseDown(with event: NSEvent) {
-        self.touchDown(atPoint: event.location(in: self))
-    }
-    
-    override func mouseDragged(with event: NSEvent) {
-        self.touchMoved(toPoint: event.location(in: self))
+        
+        lines.forEach { $0.removeFromParent() }
+        lines.removeAll()
+
+        graph.nodes.forEach { (mn: MazeNode) in
+            
+            let mnShape = mazeNodesToShapes[mn]!
+            
+            mn.passages.forEach({ (sib: MazeNode) in
+                
+                let sibShape = mazeNodesToShapes[sib]!
+                
+                let line = SKShapeNode.init()
+                let pathToDraw = CGMutablePath()
+                pathToDraw.move(to: mnShape.position)
+                pathToDraw.addLine(to: sibShape.position)
+                line.path = pathToDraw
+                line.strokeColor = SKColor.cyan
+                self.addChild(line)
+                lines.append(line)
+            })
+        }
+        
     }
     
     override func mouseUp(with event: NSEvent) {
