@@ -10,11 +10,26 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-struct VertexViewModel: Equatable {
+class VertexViewModel: Equatable, Hashable {
+    static func == (lhs: VertexViewModel, rhs: VertexViewModel) -> Bool {
+        return lhs.mazeNode == rhs.mazeNode
+    }
+    
+    var hashValue: Int {
+        return mazeNode.hashValue
+    }
+    
     let mazeNode: MazeNode
     let shape: SKShapeNode
     var velocity: CGPoint
     var netForce: CGPoint
+    
+    init(mazeNode: MazeNode, shape: SKShapeNode) {
+        self.mazeNode = mazeNode
+        self.shape = shape
+        velocity = .zero
+        netForce = .zero
+    }
     
     var position: CGPoint {
         get {

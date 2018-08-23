@@ -20,7 +20,7 @@ class GameScene: SKScene {
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
-    private var vertices = [VertexViewModel]()
+    private var vertices = Set<VertexViewModel>()
     private var graph: Graph!
     
     private var lines = [SKShapeNode]()
@@ -43,11 +43,13 @@ class GameScene: SKScene {
         }
         
         graph = Graph(with: Set(collection))
+        
     }
     
     private func visualizeGraph() {
         
         vertices.forEach { $0.removeViewFromScene() }
+        vertices.removeAll()
         
         let screenWidth = self.size.width
         let xlb = -screenWidth * 0.5
@@ -69,9 +71,8 @@ class GameScene: SKScene {
             
             self.addChild(shape)
             
-            
-            let vertexVM = VertexViewModel(mazeNode: mn, shape: shape, velocity: .zero, netForce: .zero)
-            vertices.append(vertexVM)
+            let vertexVM = VertexViewModel(mazeNode: mn, shape: shape)
+            vertices.insert(vertexVM)
             let text = SKLabelNode(attributedText: NSAttributedString(string: mn.name, attributes: [.font: NSFont.boldSystemFont(ofSize: 20),
                                                                                                     .foregroundColor: SKColor.green]))
             shape.addChild(text)
@@ -132,15 +133,14 @@ class GameScene: SKScene {
     }
     
     private let repulsion_scalar: CGFloat = 200.0
-    private let attraction_scalar: CGFloat = 0.06
-    private let velocity_scalar: CGFloat = 0.85
+    private let attraction_scalar: CGFloat = 0.010
+    private let velocity_scalar: CGFloat = 0.70
     
     private func spreadOut() {
         
         // For each node in our graph, calculate its replusion from all the other nodes, and its attraction to the nodes it has a passage to
         vertices.forEach { (v: VertexViewModel) in
             
-            var v = v
             v.netForce = .zero
             
             vertices.forEach { (u: VertexViewModel) in
@@ -168,6 +168,9 @@ class GameScene: SKScene {
         vertices.forEach { (v: VertexViewModel) in
             v.shape.position = v.velocity + v.shape.position
         }
+        
+        // Re-draw the lines
+        visualizeLines()
     }
     
     
@@ -181,7 +184,6 @@ class GameScene: SKScene {
         
         // Calculate time since last update
         let _ = currentTime - self.lastUpdateTime
-        
         
         spreadOut()
         
