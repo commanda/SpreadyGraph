@@ -30,22 +30,22 @@ class GameScene: SKScene {
     
     private func createGraph() {
         
+        let numNodes = 5 + arc4random_uniform(10)
+        var collection = [MazeNode]()
+        for i in 0..<numNodes {
+            let n = MazeNode(name: "\(i)")
+            collection.append(n)
+            
+        }
         
-        let frank = MazeNode(name: "Frank")
-        let sarah = MazeNode(name: "Sarah")
-        let jeanine = MazeNode(name: "Jeanine")
-        let lawrence = MazeNode(name: "Lawrence")
-        frank.addSibling(sarah)
-        frank.addSibling(sarah) // no-op
-        sarah.addSibling(jeanine)
-        frank.addSibling(jeanine)
-        lawrence.addSibling(frank)
+        for i in 0..<collection.count {
+            let n = collection[i]
+            for j in 0..<collection.count {
+                n.addSibling(collection[j])
+            }
+        }
         
-        let gianni = MazeNode(name: "Gianni")
-        let kim = MazeNode(name: "Kim")
-        kim.addSibling(gianni)
-        
-        graph = Graph(with: [lawrence, frank, sarah, jeanine, gianni, kim])
+        graph = Graph(with: Set(collection))
         
     }
     
