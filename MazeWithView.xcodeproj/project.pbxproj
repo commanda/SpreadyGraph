@@ -18,6 +18,7 @@
 		37FAA8B0212E018F000BFFB3 /* MazeWithViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA8AF212E018F000BFFB3 /* MazeWithViewUITests.swift */; };
 		37FAA8FD212E0629000BFFB3 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA8FB212E0629000BFFB3 /* Graph.swift */; };
 		37FAA8FE212E0629000BFFB3 /* MazeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA8FC212E0629000BFFB3 /* MazeNode.swift */; };
+		37FAA900212F12C7000BFFB3 /* VertexViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA8FF212F12C7000BFFB3 /* VertexViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		37FAA8B1212E018F000BFFB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		37FAA8FB212E0629000BFFB3 /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		37FAA8FC212E0629000BFFB3 /* MazeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MazeNode.swift; sourceTree = "<group>"; };
+		37FAA8FF212F12C7000BFFB3 /* VertexViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			children = (
 				37FAA8FB212E0629000BFFB3 /* Graph.swift */,
 				37FAA8FC212E0629000BFFB3 /* MazeNode.swift */,
+				37FAA8FF212F12C7000BFFB3 /* VertexViewModel.swift */,
 				37FAA891212E018C000BFFB3 /* GameScene.swift */,
 				37FAA88B212E018C000BFFB3 /* AppDelegate.swift */,
 				37FAA88D212E018C000BFFB3 /* GameScene.sks */,
@@ -273,6 +276,7 @@
 			files = (
 				37FAA8FD212E0629000BFFB3 /* Graph.swift in Sources */,
 				37FAA894212E018C000BFFB3 /* ViewController.swift in Sources */,
+				37FAA900212F12C7000BFFB3 /* VertexViewModel.swift in Sources */,
 				37FAA8FE212E0629000BFFB3 /* MazeNode.swift in Sources */,
 				37FAA892212E018C000BFFB3 /* GameScene.swift in Sources */,
 				37FAA88C212E018C000BFFB3 /* AppDelegate.swift in Sources */,

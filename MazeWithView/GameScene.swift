@@ -14,19 +14,16 @@ class GameScene: SKScene {
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
+    private let colors = [SKColor.darkGray, SKColor.orange, SKColor.magenta, SKColor.purple]
+    
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
-    private var nodes = [SKShapeNode]()
-    
-    private let colors = [SKColor.darkGray, SKColor.orange, SKColor.magenta, SKColor.purple]
-    
+    private var vertices = [VertexViewModel]()
     private var graph: Graph!
     
     private var lines = [SKShapeNode]()
-    
-    private var mazeNodesToShapes = [MazeNode: SKShapeNode]()
     
     private func createGraph() {
         
@@ -46,14 +43,11 @@ class GameScene: SKScene {
         }
         
         graph = Graph(with: Set(collection))
-        
     }
     
     private func visualizeGraph() {
         
-        
-        mazeNodesToShapes.values.forEach { $0.removeFromParent() }
-        mazeNodesToShapes.removeAll()
+        vertices.forEach { $0.removeViewFromScene() }
         
         let screenWidth = self.size.width
         let xlb = -screenWidth * 0.5
@@ -62,22 +56,25 @@ class GameScene: SKScene {
         
         graph.nodes.forEach { (mn: MazeNode) in
             let w = (screenWidth + self.size.height) * 0.05
+            
+            
             let rect = CGRect(x: xlb + CGFloat(arc4random_uniform(UInt32(screenWidth - w))),
                               y: ylb + CGFloat(arc4random_uniform(UInt32(screenHeight - w))),
                               width: w, height: w)
-            let node = SKShapeNode.init(ellipseOf: rect.size)
-            node.position = rect.origin
-            node.lineWidth = 2.5
-            node.strokeColor = SKColor.red
-            node.fillColor = colors.randomElement()!
-            nodes.append(node)
-            self.addChild(node)
+            let shape = SKShapeNode.init(ellipseOf: rect.size)
+            shape.position = rect.origin
+            shape.lineWidth = 2.5
+            shape.strokeColor = SKColor.red
+            shape.fillColor = colors.randomElement()!
             
+            self.addChild(shape)
+            
+            
+            let vertexVM = VertexViewModel(mazeNode: mn, shape: shape, velocity: .zero, netForce: .zero)
+            vertices.append(vertexVM)
             let text = SKLabelNode(attributedText: NSAttributedString(string: mn.name, attributes: [.font: NSFont.boldSystemFont(ofSize: 20),
                                                                                                     .foregroundColor: SKColor.green]))
-            node.addChild(text)
-            
-            mazeNodesToShapes[mn] = node
+            shape.addChild(text)
         }
     }
     
@@ -90,17 +87,14 @@ class GameScene: SKScene {
         lines.forEach { $0.removeFromParent() }
         lines.removeAll()
         
-        graph.nodes.forEach { (mn: MazeNode) in
+        vertices.forEach { (vertex: VertexViewModel) in
             
-            let mnShape = mazeNodesToShapes[mn]!
-            
-            mn.passages.forEach({ (sib: MazeNode) in
-                
-                let sibShape = mazeNodesToShapes[sib]!
+            vertex.mazeNode.passages.forEach({ (sib: MazeNode) in
+                guard let sibShape = vertices.filter({ $0.mazeNode == sib }).first?.shape else { return }
                 
                 let line = SKShapeNode.init()
                 let pathToDraw = CGMutablePath()
-                pathToDraw.move(to: mnShape.position)
+                pathToDraw.move(to: vertex.shape.position)
                 pathToDraw.addLine(to: sibShape.position)
                 line.path = pathToDraw
                 line.strokeColor = SKColor.cyan
@@ -138,6 +132,55 @@ class GameScene: SKScene {
     }
     
     
+    private func spreadOut() {
+        
+        var netForces = [MazeNode:CGPoint]()
+        
+        // For each node in our graph, calculate its replusion from all the other nodes, and its attraction to the nodes it has a passage to
+        graph.nodes.forEach { (v: MazeNode) in
+            let vSprite = mazeNodesToShapes[v]!
+            let vPos = vSprite.position
+            var netForce = netForces[v]!
+            netForce = .zero
+            
+            if nodesToVelocities[v] == nil {
+                nodesToVelocities[v] = .zero
+            }
+            
+            graph.nodes.forEach { (u: MazeNode) in
+                guard u != v else { return }
+                let uPos = mazeNodesToShapes[u]!.position
+                // squared distance between "u" and "v" in 2D space
+                let rsq = ((vPos.x-uPos.x)*(vPos.x-uPos.x)+(vPos.y-uPos.y)*(vPos.y-uPos.y))
+                // counting the repulsion between two vertices
+                netForce.x += 200 * (vPos.x - uPos.x) / rsq
+                netForce.y += 200 * (vPos.y - uPos.y) / rsq
+            }
+            // for each edge between our vertex in question and any other vertex, calculate the attraction between those two vertices
+            v.passages.forEach { (u: MazeNode) in
+                guard v != u else { return }
+                let uPos = mazeNodesToShapes[u]!.position
+                netForce.x += 0.06*(uPos.x - vPos.x);
+                netForce.y += 0.06*(uPos.y - vPos.y);
+            }
+            netForces[v] = netForce
+            
+            var velocity = nodesToVelocities[v]!
+            velocity.x = (velocity.x + netForce.x) * 0.85
+            velocity.y = (velocity.y + netForce.y) * 0.85
+            nodesToVelocities[v] = velocity
+        }
+        
+        // Now put the sprites in their new positions according to their netForces
+        netForces.forEach { (node:MazeNode, netForce: CGPoint) in
+            let velocity = nodesToVelocities[node]!
+            let shape = mazeNodesToShapes[node]!
+            shape.position.x += velocity.x
+            shape.position.y += velocity.y
+        }
+    }
+    
+    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         
@@ -147,12 +190,10 @@ class GameScene: SKScene {
         }
         
         // Calculate time since last update
-        let dt = currentTime - self.lastUpdateTime
+        let _ = currentTime - self.lastUpdateTime
         
-        // Update entities
-        for entity in self.entities {
-            entity.update(deltaTime: dt)
-        }
+        
+        spreadOut()
         
         self.lastUpdateTime = currentTime
     }
