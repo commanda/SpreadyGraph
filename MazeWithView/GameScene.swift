@@ -131,52 +131,42 @@ class GameScene: SKScene {
         }
     }
     
+    private let repulsion_scalar: CGFloat = 200.0
+    private let attraction_scalar: CGFloat = 0.06
+    private let velocity_scalar: CGFloat = 0.85
     
     private func spreadOut() {
         
-        var netForces = [MazeNode:CGPoint]()
-        
         // For each node in our graph, calculate its replusion from all the other nodes, and its attraction to the nodes it has a passage to
-        graph.nodes.forEach { (v: MazeNode) in
-            let vSprite = mazeNodesToShapes[v]!
-            let vPos = vSprite.position
-            var netForce = netForces[v]!
-            netForce = .zero
+        vertices.forEach { (v: VertexViewModel) in
             
-            if nodesToVelocities[v] == nil {
-                nodesToVelocities[v] = .zero
-            }
+            var v = v
+            v.netForce = .zero
             
-            graph.nodes.forEach { (u: MazeNode) in
+            vertices.forEach { (u: VertexViewModel) in
                 guard u != v else { return }
-                let uPos = mazeNodesToShapes[u]!.position
+                
                 // squared distance between "u" and "v" in 2D space
-                let rsq = ((vPos.x-uPos.x)*(vPos.x-uPos.x)+(vPos.y-uPos.y)*(vPos.y-uPos.y))
-                // counting the repulsion between two vertices
-                netForce.x += 200 * (vPos.x - uPos.x) / rsq
-                netForce.y += 200 * (vPos.y - uPos.y) / rsq
+                let rsq = ((v.position.x-u.position.x)*(v.position.x-u.position.x)+(v.position.y-u.position.y)*(v.position.y-u.position.y))
+                
+                // make them repulse
+                v.netForce = v.netForce + (((v.position - u.position) / rsq) * repulsion_scalar)
             }
             // for each edge between our vertex in question and any other vertex, calculate the attraction between those two vertices
-            v.passages.forEach { (u: MazeNode) in
-                guard v != u else { return }
-                let uPos = mazeNodesToShapes[u]!.position
-                netForce.x += 0.06*(uPos.x - vPos.x);
-                netForce.y += 0.06*(uPos.y - vPos.y);
+            v.mazeNode.passages.forEach { (other: MazeNode) in
+                guard v.mazeNode != other else { return }
+                guard let u = vertices.filter({ $0.mazeNode == other }).first else { return }
+                
+                // make them attract since they're connected by a passage
+                v.netForce = v.netForce + ((u.position - v.position) * attraction_scalar)
             }
-            netForces[v] = netForce
             
-            var velocity = nodesToVelocities[v]!
-            velocity.x = (velocity.x + netForce.x) * 0.85
-            velocity.y = (velocity.y + netForce.y) * 0.85
-            nodesToVelocities[v] = velocity
+            v.velocity = (v.velocity + v.netForce) * velocity_scalar
         }
         
         // Now put the sprites in their new positions according to their netForces
-        netForces.forEach { (node:MazeNode, netForce: CGPoint) in
-            let velocity = nodesToVelocities[node]!
-            let shape = mazeNodesToShapes[node]!
-            shape.position.x += velocity.x
-            shape.position.y += velocity.y
+        vertices.forEach { (v: VertexViewModel) in
+            v.shape.position = v.velocity + v.shape.position
         }
     }
     

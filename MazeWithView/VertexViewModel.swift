@@ -10,13 +10,24 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-struct VertexViewModel {
+struct VertexViewModel: Equatable {
     let mazeNode: MazeNode
     let shape: SKShapeNode
     var velocity: CGPoint
     var netForce: CGPoint
     
+    var position: CGPoint {
+        get {
+            return shape.position
+        }
+        set {
+            shape.position = newValue
+        }
+    }
+    
     func removeViewFromScene() {
         shape.removeFromParent()
     }
+    
 }
+

@@ -19,6 +19,7 @@
 		37FAA8FD212E0629000BFFB3 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA8FB212E0629000BFFB3 /* Graph.swift */; };
 		37FAA8FE212E0629000BFFB3 /* MazeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA8FC212E0629000BFFB3 /* MazeNode.swift */; };
 		37FAA900212F12C7000BFFB3 /* VertexViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA8FF212F12C7000BFFB3 /* VertexViewModel.swift */; };
+		37FAA902212F1B22000BFFB3 /* CGPointExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA901212F1B22000BFFB3 /* CGPointExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		37FAA8FB212E0629000BFFB3 /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		37FAA8FC212E0629000BFFB3 /* MazeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MazeNode.swift; sourceTree = "<group>"; };
 		37FAA8FF212F12C7000BFFB3 /* VertexViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexViewModel.swift; sourceTree = "<group>"; };
+		37FAA901212F1B22000BFFB3 /* CGPointExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPointExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				37FAA8FB212E0629000BFFB3 /* Graph.swift */,
 				37FAA8FC212E0629000BFFB3 /* MazeNode.swift */,
 				37FAA8FF212F12C7000BFFB3 /* VertexViewModel.swift */,
+				37FAA901212F1B22000BFFB3 /* CGPointExtensions.swift */,
 				37FAA891212E018C000BFFB3 /* GameScene.swift */,
 				37FAA88B212E018C000BFFB3 /* AppDelegate.swift */,
 				37FAA88D212E018C000BFFB3 /* GameScene.sks */,
@@ -277,6 +280,7 @@
 				37FAA8FD212E0629000BFFB3 /* Graph.swift in Sources */,
 				37FAA894212E018C000BFFB3 /* ViewController.swift in Sources */,
 				37FAA900212F12C7000BFFB3 /* VertexViewModel.swift in Sources */,
+				37FAA902212F1B22000BFFB3 /* CGPointExtensions.swift in Sources */,
 				37FAA8FE212E0629000BFFB3 /* MazeNode.swift in Sources */,
 				37FAA892212E018C000BFFB3 /* GameScene.swift in Sources */,
 				37FAA88C212E018C000BFFB3 /* AppDelegate.swift in Sources */,
