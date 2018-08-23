@@ -20,27 +20,54 @@ class GameScene: SKScene {
     
     private var nodes = [SKShapeNode]()
     
-    private let colors = [SKColor.darkGray, SKColor.cyan, SKColor.magenta, SKColor.blue]
+    private let colors = [SKColor.darkGray, SKColor.orange, SKColor.magenta, SKColor.purple]
+    
+    private var graph: Graph!
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
+        
+        
+        print("start")
+        
+        let frank = MazeNode(name: "Frank")
+        let sarah = MazeNode(name: "Sarah")
+        let jeanine = MazeNode(name: "Jeanine")
+        let lawrence = MazeNode(name: "Lawrence")
+        frank.addSibling(sarah)
+        frank.addSibling(sarah) // no-op
+        sarah.addSibling(jeanine)
+        frank.addSibling(jeanine)
+        lawrence.addSibling(frank)
+        
+        let gianni = MazeNode(name: "Gianni")
+        let kim = MazeNode(name: "Kim")
+        kim.addSibling(gianni)
+        
+        graph = Graph(with: [lawrence, frank, sarah, jeanine, gianni, kim])
+
         
         let screenWidth = self.size.width
         let xlb = -screenWidth * 0.5
         let screenHeight = self.size.height
         let ylb = -screenHeight * 0.5
         
-        (1...10).forEach { (i: Int) in
+        graph.nodes.forEach { (mn: MazeNode) in
             let w = (screenWidth + self.size.height) * 0.05
             let rect = CGRect(x: xlb + CGFloat(arc4random_uniform(UInt32(screenWidth - w))),
                               y: ylb + CGFloat(arc4random_uniform(UInt32(screenHeight - w))),
                               width: w, height: w)
-            let node = SKShapeNode.init(ellipseIn: rect)
+            let node = SKShapeNode.init(ellipseOf: rect.size)
+            node.position = rect.origin
             node.lineWidth = 2.5
-            node.strokeColor = colors.randomElement()!
+            node.strokeColor = SKColor.red
             node.fillColor = colors.randomElement()!
             nodes.append(node)
             self.addChild(node)
+            
+            let text = SKLabelNode(attributedText: NSAttributedString(string: mn.name, attributes: [.font: NSFont.boldSystemFont(ofSize: 20),
+                                                                                                    .foregroundColor: SKColor.green]))
+            node.addChild(text)
         }
         
     }
@@ -88,11 +115,9 @@ class GameScene: SKScene {
     }
     
     func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
+        graph.reset()
+        graph.carveMaze()
+        print(graph)
     }
     
     override func mouseDown(with event: NSEvent) {
