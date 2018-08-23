@@ -108,10 +108,10 @@
 			children = (
 				37FAA8FB212E0629000BFFB3 /* Graph.swift */,
 				37FAA8FC212E0629000BFFB3 /* MazeNode.swift */,
+				37FAA891212E018C000BFFB3 /* GameScene.swift */,
 				37FAA88B212E018C000BFFB3 /* AppDelegate.swift */,
 				37FAA88D212E018C000BFFB3 /* GameScene.sks */,
 				37FAA88F212E018C000BFFB3 /* Actions.sks */,
-				37FAA891212E018C000BFFB3 /* GameScene.swift */,
 				37FAA893212E018C000BFFB3 /* ViewController.swift */,
 				37FAA895212E018F000BFFB3 /* Assets.xcassets */,
 				37FAA897212E018F000BFFB3 /* Main.storyboard */,

@@ -81,12 +81,3 @@ extension Array {
     }
 }
 
-extension Range where Bound: SignedInteger, Bound.Stride: SignedInteger {
-    func randomElement() -> Int {
-        return Int(Int(self.lowerBound) + Int(arc4random_uniform(UInt32(self.count))))
-    }
-}
-//
-//func randomInRange(_ range: Range<Int>) -> Int {
-//    return Int(range.lowerBound + Int(arc4random_uniform(UInt32(range.count))))
-//}
