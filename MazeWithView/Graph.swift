@@ -64,8 +64,14 @@ class Graph {
             return Array(workingSet).last
         }
         
+        func chooseRandom() -> MazeNode? {
+            return workingSet.randomElement()
+        }
+        
+        let chooser = arc4random_uniform(2) == 0 ? chooseRandom : chooseNewest 
+        
         repeat {
-            if let chosen = chooseNewest() {
+            if let chosen = chooser() {
                 if let unvisitedSibling = anyUnvisitedSibling(of: chosen) {
                     chosen.carvePassage(to: unvisitedSibling)
                     workingSet.insert(unvisitedSibling)
