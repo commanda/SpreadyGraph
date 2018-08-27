@@ -25,6 +25,15 @@ class GameScene: SKScene {
     
     private var lines = [SKShapeNode]()
     
+    private let vertexPlacer: VertexPlacer
+    
+    private var doneSpreadingOut = false
+    
+    required init?(coder aDecoder: NSCoder) {
+        vertexPlacer = TensionSpreader()
+        super.init(coder: aDecoder)
+    }
+    
     private func createGraph() {
         
         let numNodes = 10 + arc4random_uniform(30)
@@ -43,7 +52,6 @@ class GameScene: SKScene {
         }
         
         graph = Graph(with: Set(collection))
-        
     }
     
     private func visualizeGraph() {
@@ -106,6 +114,7 @@ class GameScene: SKScene {
     }
     
     private func resetGraph() {
+        doneSpreadingOut = false
         createGraph()
         graph.reset()
         graph.carveMaze()
@@ -118,80 +127,19 @@ class GameScene: SKScene {
     }
     
     override func mouseUp(with event: NSEvent) {
-        doneSpreadingOut = false
         self.touchUp(atPoint: event.location(in: self))
     }
     
-    private let repulsion_scalar: CGFloat = 100.0
-    private let attraction_scalar: CGFloat = 0.120
-    private let velocity_scalar: CGFloat = 0.8
-    private let avgNetForceThreshold: CGFloat = 5.0
-    
-    private var doneSpreadingOut = false
-    
     private func spreadOut() {
-        
-        guard doneSpreadingOut == false else { return }
-        
-        // For each node in our graph, calculate its replusion from all the other nodes, and its attraction to the nodes it has a passage to
-        vertices.forEach { (v: VertexViewModel) in
-            
-            v.netForce = .zero
-            
-            vertices.forEach { (u: VertexViewModel) in
-                guard u != v else { return }
-                
-                // squared distance between "u" and "v" in 2D space
-                let rsq = ((v.position.x-u.position.x)*(v.position.x-u.position.x)+(v.position.y-u.position.y)*(v.position.y-u.position.y))
-                
-                // make them repulse
-                v.netForce = v.netForce + (((v.position - u.position) / rsq) * repulsion_scalar)
-            }
-            // for each edge between our vertex in question and any other vertex, calculate the attraction between those two vertices
-            v.mazeNode.passages.forEach { (other: MazeNode) in
-                guard v.mazeNode != other else { return }
-                guard let u = vertices.filter({ $0.mazeNode == other }).first else { return }
-                
-                // make them attract since they're connected by a passage
-                v.netForce = v.netForce + ((u.position - v.position) * attraction_scalar)
-            }
-            
-            v.velocity = (v.velocity + v.netForce) * velocity_scalar
+        if !doneSpreadingOut {
+            doneSpreadingOut = vertexPlacer.spreadOut(vertices: vertices)
         }
-        
-        let avgNetForce = vertices.reduce(0) { (value: CGFloat, v:VertexViewModel) -> CGFloat in
-            value + v.netForce.distanceFrom(.zero)
-        } / CGFloat(vertices.count)
-        
-        if avgNetForce < avgNetForceThreshold {
-            doneSpreadingOut = true
-        }
-        
-        // Now put the sprites in their new positions according to their netForces
-        vertices.forEach { (v: VertexViewModel) in
-            v.shape.position = v.velocity + v.shape.position
-        }
-        
-        print("avgNetForce: \(avgNetForce)")
-        
         // Re-draw the lines
         visualizeLines()
     }
     
-    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        
-        // Initialize _lastUpdateTime if it has not already been
-        if (self.lastUpdateTime == 0) {
-            self.lastUpdateTime = currentTime
-        }
-        
-        // Calculate time since last update
-        let _ = currentTime - self.lastUpdateTime
-        
         spreadOut()
-        
-        self.lastUpdateTime = currentTime
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		376F50B321349A3B006EEDEB /* TensionSpreader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376F50B221349A3B006EEDEB /* TensionSpreader.swift */; };
+		376F50B521349AC2006EEDEB /* VertexPlacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376F50B421349AC2006EEDEB /* VertexPlacer.swift */; };
 		37FAA88C212E018C000BFFB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA88B212E018C000BFFB3 /* AppDelegate.swift */; };
 		37FAA88E212E018C000BFFB3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 37FAA88D212E018C000BFFB3 /* GameScene.sks */; };
 		37FAA890212E018C000BFFB3 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 37FAA88F212E018C000BFFB3 /* Actions.sks */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		376F50B221349A3B006EEDEB /* TensionSpreader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TensionSpreader.swift; sourceTree = "<group>"; };
+		376F50B421349AC2006EEDEB /* VertexPlacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexPlacer.swift; sourceTree = "<group>"; };
 		37FAA888212E018C000BFFB3 /* MazeWithView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MazeWithView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37FAA88B212E018C000BFFB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37FAA88D212E018C000BFFB3 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -115,6 +119,8 @@
 				37FAA8FF212F12C7000BFFB3 /* VertexViewModel.swift */,
 				37FAA901212F1B22000BFFB3 /* CGPointExtensions.swift */,
 				37FAA891212E018C000BFFB3 /* GameScene.swift */,
+				376F50B221349A3B006EEDEB /* TensionSpreader.swift */,
+				376F50B421349AC2006EEDEB /* VertexPlacer.swift */,
 				37FAA88B212E018C000BFFB3 /* AppDelegate.swift */,
 				37FAA88D212E018C000BFFB3 /* GameScene.sks */,
 				37FAA88F212E018C000BFFB3 /* Actions.sks */,
@@ -279,10 +285,12 @@
 			files = (
 				37FAA8FD212E0629000BFFB3 /* Graph.swift in Sources */,
 				37FAA894212E018C000BFFB3 /* ViewController.swift in Sources */,
+				376F50B521349AC2006EEDEB /* VertexPlacer.swift in Sources */,
 				37FAA900212F12C7000BFFB3 /* VertexViewModel.swift in Sources */,
 				37FAA902212F1B22000BFFB3 /* CGPointExtensions.swift in Sources */,
 				37FAA8FE212E0629000BFFB3 /* MazeNode.swift in Sources */,
 				37FAA892212E018C000BFFB3 /* GameScene.swift in Sources */,
+				376F50B321349A3B006EEDEB /* TensionSpreader.swift in Sources */,
 				37FAA88C212E018C000BFFB3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
