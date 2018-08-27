@@ -21,7 +21,7 @@ class GameScene: SKScene {
     private var spinnyNode : SKShapeNode?
     
     private var vertices = Set<VertexViewModel>()
-    private var graph: Graph!
+    private var graph = Graph(min: 10, max: 40)
     
     private var lines = [SKShapeNode]()
     
@@ -32,26 +32,6 @@ class GameScene: SKScene {
     required init?(coder aDecoder: NSCoder) {
         vertexPlacer = TensionSpreader()
         super.init(coder: aDecoder)
-    }
-    
-    private func createGraph() {
-        
-        let numNodes = 10 + arc4random_uniform(30)
-        var collection = [MazeNode]()
-        for i in 0..<numNodes {
-            let n = MazeNode(name: "\(i)")
-            collection.append(n)
-            
-        }
-        
-        for i in 0..<collection.count {
-            let n = collection[i]
-            for j in 0..<collection.count {
-                n.addSibling(collection[j])
-            }
-        }
-        
-        graph = Graph(with: Set(collection))
     }
     
     private func visualizeGraph() {
@@ -115,8 +95,8 @@ class GameScene: SKScene {
     
     private func resetGraph() {
         doneSpreadingOut = false
-        createGraph()
-        graph.reset()
+        graph.generate()
+        graph.uncarvePassages()
         graph.carveMaze()
         visualizeGraph()
         visualizeLines()

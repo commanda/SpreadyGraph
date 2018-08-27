@@ -9,10 +9,34 @@
 import Foundation
 
 class Graph {
-    var nodes: Set<MazeNode>
+    var nodes: Set<MazeNode>!
     
-    init(with nodes:Set<MazeNode>) {
-        self.nodes = nodes
+    let min: Int
+    let max: Int
+    
+    init(min: Int, max: Int) {
+        self.min = min
+        self.max = max
+    }
+    
+    func generate() {
+        
+        let numNodes = min + Int(arc4random_uniform(UInt32(max - min)))
+        var collection = [MazeNode]()
+        for i in 0..<numNodes {
+            let n = MazeNode(name: "\(i)")
+            collection.append(n)
+            
+        }
+        
+        for i in 0..<collection.count {
+            let n = collection[i]
+            for j in 0..<collection.count {
+                n.addSibling(collection[j])
+            }
+        }
+        
+        nodes = Set(collection)
     }
     
     func carveMaze() {
@@ -54,7 +78,7 @@ class Graph {
         } while !workingSet.isEmpty
     }
     
-    func reset() {
+    func uncarvePassages() {
         nodes.forEach { $0.uncarveAllPassages() }
     }
 }
