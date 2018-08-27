@@ -25,5 +25,9 @@ extension CGPoint {
     static func / (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
         return CGPoint(x: lhs.x / rhs, y: lhs.y / rhs)
     }
+    
+    func distanceFrom(_ other: CGPoint) -> CGFloat {
+        return (pow(other.x - self.x, 2) + pow(other.y - self.y, 2)).squareRoot()
+    }
 }
 

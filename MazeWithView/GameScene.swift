@@ -118,25 +118,20 @@ class GameScene: SKScene {
     }
     
     override func mouseUp(with event: NSEvent) {
+        doneSpreadingOut = false
         self.touchUp(atPoint: event.location(in: self))
     }
     
-    override func keyDown(with event: NSEvent) {
-        switch event.keyCode {
-        
-        default:
-            if let label = self.label {
-                label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-            }
-            print("keyDown: \(event.characters!) keyCode: \(event.keyCode)")
-        }
-    }
-    
     private let repulsion_scalar: CGFloat = 100.0
-    private let attraction_scalar: CGFloat = 0.030
-    private let velocity_scalar: CGFloat = 0.70
+    private let attraction_scalar: CGFloat = 0.120
+    private let velocity_scalar: CGFloat = 0.8
+    private let avgNetForceThreshold: CGFloat = 5.0
+    
+    private var doneSpreadingOut = false
     
     private func spreadOut() {
+        
+        guard doneSpreadingOut == false else { return }
         
         // For each node in our graph, calculate its replusion from all the other nodes, and its attraction to the nodes it has a passage to
         vertices.forEach { (v: VertexViewModel) in
@@ -164,10 +159,20 @@ class GameScene: SKScene {
             v.velocity = (v.velocity + v.netForce) * velocity_scalar
         }
         
+        let avgNetForce = vertices.reduce(0) { (value: CGFloat, v:VertexViewModel) -> CGFloat in
+            value + v.netForce.distanceFrom(.zero)
+        } / CGFloat(vertices.count)
+        
+        if avgNetForce < avgNetForceThreshold {
+            doneSpreadingOut = true
+        }
+        
         // Now put the sprites in their new positions according to their netForces
         vertices.forEach { (v: VertexViewModel) in
             v.shape.position = v.velocity + v.shape.position
         }
+        
+        print("avgNetForce: \(avgNetForce)")
         
         // Re-draw the lines
         visualizeLines()
