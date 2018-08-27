@@ -21,7 +21,7 @@ class GameScene: SKScene {
     private var spinnyNode : SKShapeNode?
     
     private var vertices = Set<VertexViewModel>()
-    private var graph = Graph(min: 10, max: 40)
+    private var graph = Graph(min: 20, max: 30)
     
     private var lines = [SKShapeNode]()
     

@@ -32,7 +32,9 @@ class Graph {
         for i in 0..<collection.count {
             let n = collection[i]
             for j in 0..<collection.count {
-                n.addSibling(collection[j])
+                if j % 2 == 0 {
+                    n.addSibling(collection[j])
+                }
             }
         }
         
@@ -68,7 +70,7 @@ class Graph {
             return workingSet.randomElement()
         }
         
-        let chooser = arc4random_uniform(2) == 0 ? chooseRandom : chooseNewest 
+        let chooser = arc4random_uniform(2) == 0 ? chooseRandom : chooseNewest
         
         repeat {
             if let chosen = chooser() {
