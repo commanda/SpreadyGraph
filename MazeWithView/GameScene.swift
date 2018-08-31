@@ -9,6 +9,9 @@
 import SpriteKit
 import GameplayKit
 
+// constants for configuring
+let drawVertexLabels = false
+
 class GameScene: SKScene {
     
     var entities = [GKEntity]()
@@ -61,9 +64,11 @@ class GameScene: SKScene {
             
             let vertexVM = VertexViewModel(mazeNode: mn, shape: shape)
             vertices.insert(vertexVM)
-            let text = SKLabelNode(attributedText: NSAttributedString(string: mn.name, attributes: [.font: NSFont.boldSystemFont(ofSize: 20),
-                                                                                                    .foregroundColor: SKColor.green]))
-            shape.addChild(text)
+            if drawVertexLabels {
+                let text = SKLabelNode(attributedText: NSAttributedString(string: mn.name, attributes: [.font: NSFont.boldSystemFont(ofSize: 20),
+                                                                                                    .foregroundColor: SKColor.blue]))
+                shape.addChild(text)
+            }
         }
     }
     
@@ -87,6 +92,9 @@ class GameScene: SKScene {
                 pathToDraw.addLine(to: sibShape.position)
                 line.path = pathToDraw
                 line.strokeColor = SKColor.cyan
+                line.fillColor = SKColor.yellow
+                line.lineWidth = 10
+                line.lineCap = .round
                 self.addChild(line)
                 lines.append(line)
             })
