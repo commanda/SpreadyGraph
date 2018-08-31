@@ -84,6 +84,13 @@ class Graph {
                 }
             }
         } while !workingSet.isEmpty
+        
+        // now poke some extra holes so the maze isn't just a boring spanning tree
+        for _ in 0...(arc4random_uniform(UInt32(nodes.count))) {
+            let node = nodes.randomElement()!
+            let potentialPassages = node.siblings.subtracting(node.passages)
+            potentialPassages.randomElement()?.carvePassage(to: node)
+        }
     }
     
     func uncarvePassages() {

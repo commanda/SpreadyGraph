@@ -13,7 +13,7 @@ class TensionSpreader: VertexPlacer {
     private let repulsion_scalar: CGFloat = 100.0
     private let attraction_scalar: CGFloat = 0.060
     private let velocity_scalar: CGFloat = 0.8
-    private let avgNetForceThreshold: CGFloat = 5.0
+    private let avgNetForceThreshold: CGFloat = 0.0
     
     func spreadOut(vertices: Set<VertexViewModel>) -> Bool {
         
