@@ -93,9 +93,10 @@ class GameScene: SKScene {
                 let pathToDraw = CGMutablePath()
                 pathToDraw.move(to: vertex.shape.position)
                 pathToDraw.addLine(to: sibShape.position)
+                
                 line.path = pathToDraw
-                line.strokeColor = SKColor.cyan
-                line.fillColor = SKColor.yellow
+                line.strokeColor = SKColor.white
+                line.strokeTexture = SKTexture(imageNamed: "linetexture")
                 line.lineWidth = 10
                 line.lineCap = .round
                 self.addChild(line)
