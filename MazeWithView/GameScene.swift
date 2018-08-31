@@ -11,6 +11,7 @@ import GameplayKit
 
 // constants for configuring
 let drawVertexLabels = false
+let drawVertices = false
 
 class GameScene: SKScene {
     
@@ -61,6 +62,8 @@ class GameScene: SKScene {
             shape.fillColor = colors.randomElement()!
             
             self.addChild(shape)
+            
+            shape.isHidden = !drawVertices
             
             let vertexVM = VertexViewModel(mazeNode: mn, shape: shape)
             vertices.insert(vertexVM)
