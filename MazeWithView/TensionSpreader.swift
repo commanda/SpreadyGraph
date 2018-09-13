@@ -16,7 +16,9 @@ class TensionSpreader: VertexPlacer {
     private let avgNetForceThreshold: CGFloat = 0.01
     private let animate = false
     
-    func spreadOut(vertices: Set<VertexViewModel>) -> Bool {
+    func spreadOut(vertices: Set<VertexViewModel>, rect: CGRect) -> Bool {
+        
+        let rect = rect.insetBy(dx: 30, dy: 30)
         
         func iterateSpreadOut() -> Bool {
             
@@ -59,6 +61,8 @@ class TensionSpreader: VertexPlacer {
             // Now put the sprites in their new positions according to their netForces
             vertices.forEach { (v: VertexViewModel) in
                 v.shape.position = v.velocity + v.shape.position
+                // But keep them on screen
+                //v.shape.position = v.shape.position.clamp(to: rect)
             }
             
             return doneSpreadingOut

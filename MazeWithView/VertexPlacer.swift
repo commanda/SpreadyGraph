@@ -9,5 +9,5 @@
 import Foundation
 
 protocol VertexPlacer {
-    func spreadOut(vertices: Set<VertexViewModel>) -> Bool
+    func spreadOut(vertices: Set<VertexViewModel>, rect: CGRect) -> Bool
 }

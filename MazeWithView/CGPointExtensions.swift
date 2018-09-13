@@ -29,5 +29,9 @@ extension CGPoint {
     func distanceFrom(_ other: CGPoint) -> CGFloat {
         return (pow(other.x - self.x, 2) + pow(other.y - self.y, 2)).squareRoot()
     }
+    
+    func clamp(to rect: CGRect) -> CGPoint {
+        return CGPoint(x: min(max(self.x, rect.minX), rect.maxX), y: min(max(self.y, rect.minY), rect.maxY))
+    }
 }
 

@@ -124,7 +124,7 @@ class GameScene: SKScene {
     
     private func spreadOut() {
         if !doneSpreadingOut {
-            doneSpreadingOut = vertexPlacer.spreadOut(vertices: vertices)
+            doneSpreadingOut = vertexPlacer.spreadOut(vertices: vertices, rect: self.frame)
         }
         // Re-draw the lines
         visualizeLines()
