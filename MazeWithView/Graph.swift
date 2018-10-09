@@ -51,26 +51,30 @@ class Graph {
             for j in 0..<rows {
                 for i in 0..<columns {
                     guard let n = grid[i, true]?[j, true] else { continue }
-                    if let ul = grid[i-1, true]?[j-1, true] {
-                        n.addSibling(ul)
-                    }
+                    
+//                    // Diagonals
+//                    if let ul = grid[i-1, true]?[j-1, true] {
+//                        n.addSibling(ul)
+//                    }
+//                    if let ur = grid[i+1, true]?[j+1, true] {
+//                        n.addSibling(ur)
+//                    }
+//                    if let dr = grid[i+1, true]?[j+1, true] {
+//                        n.addSibling(dr)
+//                    }
+//                    if let dl = grid[i-1, true]?[j+1, true]{
+//                        n.addSibling(dl)
+//                    }
+                    
+                    // Cardinals
                     if let u = grid[i, true]?[j-1, true] {
                         n.addSibling(u)
-                    }
-                    if let ur = grid[i+1, true]?[j+1, true] {
-                        n.addSibling(ur)
                     }
                     if let r = grid[i+1, true]?[j, true] {
                         n.addSibling(r)
                     }
-                    if let dr = grid[i+1, true]?[j+1, true] {
-                        n.addSibling(dr)
-                    }
                     if let d = grid[i, true]?[j+1, true]{
                         n.addSibling(d)
-                    }
-                    if let dl = grid[i-1, true]?[j+1, true]{
-                        n.addSibling(dl)
                     }
                     if let l = grid[i-1, true]?[j, true]{
                         n.addSibling(l)
@@ -99,6 +103,18 @@ class Graph {
     }
     
     func carveMaze() {
+        carveMazeEverything()
+    }
+    
+    func carveMazeEverything() {
+        for n in nodes {
+            for s in n.siblings {
+                n.carvePassage(to: s)
+            }
+        }
+    }
+    
+    func carveMazeGrowingTree(){
         /*
          Let C be a list of cells, initially empty. Add one cell to C, at random.
          Choose a cell from C, and carve a passage to any unvisited neighbor of that cell, adding that neighbor to C as well. If there are no unvisited neighbors, remove the cell from C.
@@ -141,6 +157,7 @@ class Graph {
                 }
             }
         } while !workingSet.isEmpty
+        
     }
     
     func makeExtraPassages() {

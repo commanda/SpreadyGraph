@@ -118,14 +118,14 @@
 		37FAA88A212E018C000BFFB3 /* MazeWithView */ = {
 			isa = PBXGroup;
 			children = (
+				37FAA891212E018C000BFFB3 /* GameScene.swift */,
 				37FAA8FB212E0629000BFFB3 /* Graph.swift */,
 				37DEBEE0214ABBF8002F92CB /* ArrayExtensions.swift */,
 				37FAA8FC212E0629000BFFB3 /* MazeNode.swift */,
 				37FAA8FF212F12C7000BFFB3 /* VertexViewModel.swift */,
 				37FAA901212F1B22000BFFB3 /* CGPointExtensions.swift */,
-				37FAA891212E018C000BFFB3 /* GameScene.swift */,
-				376F50B221349A3B006EEDEB /* TensionSpreader.swift */,
 				376F50B421349AC2006EEDEB /* VertexPlacer.swift */,
+				376F50B221349A3B006EEDEB /* TensionSpreader.swift */,
 				37DEBEDE214AB1C2002F92CB /* NoOpSpreader.swift */,
 				37FAA88B212E018C000BFFB3 /* AppDelegate.swift */,
 				37FAA88D212E018C000BFFB3 /* GameScene.sks */,
