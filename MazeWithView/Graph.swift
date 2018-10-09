@@ -29,14 +29,71 @@ class Graph {
             
         }
         
-        for i in 0..<collection.count {
-            let n = collection[i]
-            for j in 0..<collection.count {
-                if j % 2 == 0 {
-                    n.addSibling(collection[j])
+        func layoutInGrid() {
+            
+            let columns = 4
+            
+            let rows = (numNodes % columns == 0) ? numNodes / columns : (numNodes / columns) + 1
+            
+            var counter = 0
+            var grid = [[MazeNode]]()
+            for _ in 0..<rows {
+                var row = [MazeNode]()
+                for _ in 0..<columns {
+                    guard counter < collection.count else { break }
+                    row.append(collection[counter])
+                    counter += 1
+                }
+                
+                grid.append(row)
+            }
+            
+            for j in 0..<rows {
+                for i in 0..<columns {
+                    guard let n = grid[i, true]?[j, true] else { continue }
+                    if let ul = grid[i-1, true]?[j-1, true] {
+                        n.addSibling(ul)
+                    }
+                    if let u = grid[i, true]?[j-1, true] {
+                        n.addSibling(u)
+                    }
+                    if let ur = grid[i+1, true]?[j+1, true] {
+                        n.addSibling(ur)
+                    }
+                    if let r = grid[i+1, true]?[j, true] {
+                        n.addSibling(r)
+                    }
+                    if let dr = grid[i+1, true]?[j+1, true] {
+                        n.addSibling(dr)
+                    }
+                    if let d = grid[i, true]?[j+1, true]{
+                        n.addSibling(d)
+                    }
+                    if let dl = grid[i-1, true]?[j+1, true]{
+                        n.addSibling(dl)
+                    }
+                    if let l = grid[i-1, true]?[j, true]{
+                        n.addSibling(l)
+                    }
                 }
             }
         }
+        
+        func layoutAllInLine () {
+            for i in 0..<collection.count {
+                let n = collection[i]
+                
+                guard i > 0 else { continue }
+                let l = collection[i-1]
+                n.addSibling(l)
+                
+                guard i < collection.count - 1 else { continue }
+                let r = collection[i+1]
+                n.addSibling(r)
+            }
+        }
+        
+        layoutInGrid()
         
         nodes = Set(collection)
     }

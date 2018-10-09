@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		376F50B321349A3B006EEDEB /* TensionSpreader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376F50B221349A3B006EEDEB /* TensionSpreader.swift */; };
 		376F50B521349AC2006EEDEB /* VertexPlacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376F50B421349AC2006EEDEB /* VertexPlacer.swift */; };
+		37DEBEDF214AB1C2002F92CB /* NoOpSpreader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DEBEDE214AB1C2002F92CB /* NoOpSpreader.swift */; };
+		37DEBEE1214ABBF8002F92CB /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DEBEE0214ABBF8002F92CB /* ArrayExtensions.swift */; };
 		37FAA88C212E018C000BFFB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAA88B212E018C000BFFB3 /* AppDelegate.swift */; };
 		37FAA88E212E018C000BFFB3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 37FAA88D212E018C000BFFB3 /* GameScene.sks */; };
 		37FAA890212E018C000BFFB3 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 37FAA88F212E018C000BFFB3 /* Actions.sks */; };
@@ -44,6 +46,8 @@
 /* Begin PBXFileReference section */
 		376F50B221349A3B006EEDEB /* TensionSpreader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TensionSpreader.swift; sourceTree = "<group>"; };
 		376F50B421349AC2006EEDEB /* VertexPlacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexPlacer.swift; sourceTree = "<group>"; };
+		37DEBEDE214AB1C2002F92CB /* NoOpSpreader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoOpSpreader.swift; sourceTree = "<group>"; };
+		37DEBEE0214ABBF8002F92CB /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		37FAA888212E018C000BFFB3 /* MazeWithView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MazeWithView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37FAA88B212E018C000BFFB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37FAA88D212E018C000BFFB3 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -115,12 +119,14 @@
 			isa = PBXGroup;
 			children = (
 				37FAA8FB212E0629000BFFB3 /* Graph.swift */,
+				37DEBEE0214ABBF8002F92CB /* ArrayExtensions.swift */,
 				37FAA8FC212E0629000BFFB3 /* MazeNode.swift */,
 				37FAA8FF212F12C7000BFFB3 /* VertexViewModel.swift */,
 				37FAA901212F1B22000BFFB3 /* CGPointExtensions.swift */,
 				37FAA891212E018C000BFFB3 /* GameScene.swift */,
 				376F50B221349A3B006EEDEB /* TensionSpreader.swift */,
 				376F50B421349AC2006EEDEB /* VertexPlacer.swift */,
+				37DEBEDE214AB1C2002F92CB /* NoOpSpreader.swift */,
 				37FAA88B212E018C000BFFB3 /* AppDelegate.swift */,
 				37FAA88D212E018C000BFFB3 /* GameScene.sks */,
 				37FAA88F212E018C000BFFB3 /* Actions.sks */,
@@ -219,13 +225,16 @@
 				TargetAttributes = {
 					37FAA887212E018C000BFFB3 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 					37FAA89F212E018F000BFFB3 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 37FAA887212E018C000BFFB3;
 					};
 					37FAA8AA212E018F000BFFB3 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 37FAA887212E018C000BFFB3;
 					};
 				};
@@ -288,8 +297,10 @@
 				376F50B521349AC2006EEDEB /* VertexPlacer.swift in Sources */,
 				37FAA900212F12C7000BFFB3 /* VertexViewModel.swift in Sources */,
 				37FAA902212F1B22000BFFB3 /* CGPointExtensions.swift in Sources */,
+				37DEBEE1214ABBF8002F92CB /* ArrayExtensions.swift in Sources */,
 				37FAA8FE212E0629000BFFB3 /* MazeNode.swift in Sources */,
 				37FAA892212E018C000BFFB3 /* GameScene.swift in Sources */,
+				37DEBEDF214AB1C2002F92CB /* NoOpSpreader.swift in Sources */,
 				376F50B321349A3B006EEDEB /* TensionSpreader.swift in Sources */,
 				37FAA88C212E018C000BFFB3 /* AppDelegate.swift in Sources */,
 			);
@@ -466,7 +477,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.amandawixted.MazeWithView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -485,7 +496,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.amandawixted.MazeWithView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -505,7 +516,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.amandawixted.MazeWithViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MazeWithView.app/Contents/MacOS/MazeWithView";
 			};
 			name = Debug;
@@ -526,7 +537,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.amandawixted.MazeWithViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MazeWithView.app/Contents/MacOS/MazeWithView";
 			};
 			name = Release;
@@ -546,7 +557,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.amandawixted.MazeWithViewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = MazeWithView;
 			};
 			name = Debug;
@@ -566,7 +577,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.amandawixted.MazeWithViewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = MazeWithView;
 			};
 			name = Release;

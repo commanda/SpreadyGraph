@@ -34,7 +34,8 @@ class GameScene: SKScene {
     private var doneSpreadingOut = false
     
     required init?(coder aDecoder: NSCoder) {
-        vertexPlacer = TensionSpreader()
+        //vertexPlacer = TensionSpreader()
+        vertexPlacer = NoOpSpreader()
         super.init(coder: aDecoder)
     }
     
