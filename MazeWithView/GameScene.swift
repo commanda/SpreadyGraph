@@ -9,10 +9,6 @@
 import SpriteKit
 import GameplayKit
 
-// constants for configuring
-let drawVertexLabels = false
-let drawVertices = false
-
 class GameScene: SKScene {
     
     var entities = [GKEntity]()
@@ -34,8 +30,7 @@ class GameScene: SKScene {
     private var doneSpreadingOut = false
     
     required init?(coder aDecoder: NSCoder) {
-        vertexPlacer = TensionSpreader()
-        //vertexPlacer = NoOpSpreader()
+        vertexPlacer = Constants.vertexPlacer
         super.init(coder: aDecoder)
     }
     
@@ -64,13 +59,13 @@ class GameScene: SKScene {
             
             self.addChild(shape)
             
-            shape.isHidden = !drawVertices
+            shape.isHidden = !Constants.drawVertices
             
             let vertexVM = VertexViewModel(mazeNode: mn, shape: shape)
             vertices.insert(vertexVM)
-            if drawVertexLabels {
+            if Constants.drawVertexLabels {
                 let text = SKLabelNode(attributedText: NSAttributedString(string: mn.name, attributes: [.font: NSFont.boldSystemFont(ofSize: 20),
-                                                                                                    .foregroundColor: SKColor.blue]))
+                                                                                                    .foregroundColor: SKColor.white]))
                 shape.addChild(text)
             }
         }
@@ -104,6 +99,40 @@ class GameScene: SKScene {
                 lines.append(line)
             })
         }
+    }
+    
+    private func sCurve() {
+        
+        /*
+         -(ccBezierConfig)bezierForStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint curviness:(CGFloat)alpha
+         {
+         CGPoint basis1 = ccpLerp(startPoint, endPoint, 0.3333);
+         CGPoint basis2 = ccpLerp(startPoint, endPoint, 0.6666);
+         
+         // Get a point on the perpendicular line of each of the control points
+         CGPoint vector = ccpSub(endPoint, startPoint);
+         
+         // First point is to the right, second is to the left, of the line between the start point and end point
+         CGPoint v1 = ccpRPerp(vector);
+         CGPoint v2 = ccpPerp(vector);
+         
+         // Translate our two perpendicular vectors over onto our chosen basis points
+         CGPoint s1 = ccpAdd(basis1, v1);
+         CGPoint s2 = ccpAdd(basis2, v2);
+         
+         // Apply the alpha to control curviness
+         CGPoint l1 = ccpLerp(basis1, s1, alpha);
+         CGPoint l2 = ccpLerp(basis2, s2, alpha);
+         
+         ccBezierConfig bezier = (ccBezierConfig){
+         endPoint,    // end point
+         l1,            // control point 1
+         l2            // control point 2
+         };
+         
+         return bezier;
+         }
+         */
     }
     
     private func resetGraph() {

@@ -37,34 +37,21 @@ class Graph {
             
             var counter = 0
             var grid = [[MazeNode]]()
-            for _ in 0..<rows {
-                var row = [MazeNode]()
-                for _ in 0..<columns {
+            for _ in 0..<columns {
+                var column = [MazeNode]()
+                for _ in 0..<rows {
                     guard counter < collection.count else { break }
-                    row.append(collection[counter])
+                    column.append(collection[counter])
                     counter += 1
                 }
                 
-                grid.append(row)
+                grid.append(column)
             }
             
-            for j in 0..<rows {
-                for i in 0..<columns {
+            
+            for i in 0..<columns {
+                for j in 0..<rows {
                     guard let n = grid[i, true]?[j, true] else { continue }
-                    
-//                    // Diagonals
-//                    if let ul = grid[i-1, true]?[j-1, true] {
-//                        n.addSibling(ul)
-//                    }
-//                    if let ur = grid[i+1, true]?[j+1, true] {
-//                        n.addSibling(ur)
-//                    }
-//                    if let dr = grid[i+1, true]?[j+1, true] {
-//                        n.addSibling(dr)
-//                    }
-//                    if let dl = grid[i-1, true]?[j+1, true]{
-//                        n.addSibling(dl)
-//                    }
                     
                     // Cardinals
                     if let u = grid[i, true]?[j-1, true] {
@@ -78,6 +65,22 @@ class Graph {
                     }
                     if let l = grid[i-1, true]?[j, true]{
                         n.addSibling(l)
+                    }
+                    
+                    if Constants.connectDiagonals {
+                        // Diagonals
+                        if let ul = grid[i-1, true]?[j-1, true] {
+                            n.addSibling(ul)
+                        }
+                        if let ur = grid[i+1, true]?[j+1, true] {
+                            n.addSibling(ur)
+                        }
+                        if let dr = grid[i+1, true]?[j+1, true] {
+                            n.addSibling(dr)
+                        }
+                        if let dl = grid[i-1, true]?[j+1, true]{
+                            n.addSibling(dl)
+                        }
                     }
                 }
             }

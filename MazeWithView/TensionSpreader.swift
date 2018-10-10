@@ -14,7 +14,6 @@ class TensionSpreader: VertexPlacer {
     private let attraction_scalar: CGFloat = 0.100
     private let velocity_scalar: CGFloat = 0.8
     private let avgNetForceThreshold: CGFloat = 0.01
-    private let animate = true
     
     func spreadOut(vertices: Set<VertexViewModel>, rect: CGRect) -> Bool {
         
@@ -68,7 +67,7 @@ class TensionSpreader: VertexPlacer {
             return doneSpreadingOut
         }
         
-        if !animate {
+        if !Constants.animateSpreadOut {
             while !iterateSpreadOut() {}
             return true
         } else {
