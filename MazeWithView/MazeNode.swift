@@ -14,10 +14,15 @@ class MazeNode {
     var siblings: Set<MazeNode>
     var passages: Set<MazeNode>
     
+    var attraction: Float
+    var repulsion: Float
+    
     init(name: String) {
         self.name = name
         siblings = Set<MazeNode>()
         passages = Set<MazeNode>()
+        attraction = Float(10 + arc4random_uniform(UInt32(120))) * 0.001 //0.1: 0.08 to 0.12
+        repulsion = Float(3 + arc4random_uniform(UInt32(300))) //around 50
     }
     
     func addSibling(_ sibling: MazeNode) {

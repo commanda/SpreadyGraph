@@ -31,9 +31,9 @@ class Graph {
         
         func layoutInGrid() {
             
-            let columns = 4
+            let columns = Int(sqrt(Double(numNodes)))
             
-            let rows = (numNodes % columns == 0) ? numNodes / columns : (numNodes / columns) + 1
+            let rows = columns + 1
             
             var counter = 0
             var grid = [[MazeNode]]()

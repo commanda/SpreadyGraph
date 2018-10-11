@@ -10,8 +10,8 @@ import Foundation
 
 class TensionSpreader: VertexPlacer {
     
-    private let repulsion_scalar: CGFloat = 50.0
-    private let attraction_scalar: CGFloat = 0.100
+    //private let repulsion_scalar: CGFloat = 50.0
+    //private let attraction_scalar: CGFloat = 0.100
     private let velocity_scalar: CGFloat = 0.8
     private let avgNetForceThreshold: CGFloat = 0.01
     
@@ -35,7 +35,8 @@ class TensionSpreader: VertexPlacer {
                     let rsq = ((v.position.x-u.position.x)*(v.position.x-u.position.x)+(v.position.y-u.position.y)*(v.position.y-u.position.y))
                     
                     // make them repulse
-                    v.netForce = v.netForce + (((v.position - u.position) / rsq) * repulsion_scalar)
+                    let repulsion = CGFloat(u.mazeNode.repulsion + v.mazeNode.repulsion) / 2.0
+                    v.netForce = v.netForce + (((v.position - u.position) / rsq) * repulsion)
                 }
                 // for each edge between our vertex in question and any other vertex, calculate the attraction between those two vertices
                 v.mazeNode.passages.forEach { (other: MazeNode) in
@@ -43,7 +44,8 @@ class TensionSpreader: VertexPlacer {
                     guard let u = vertices.filter({ $0.mazeNode == other }).first else { return }
                     
                     // make them attract since they're connected by a passage
-                    v.netForce = v.netForce + ((u.position - v.position) * attraction_scalar)
+                    let attraction = CGFloat(u.mazeNode.attraction + v.mazeNode.attraction) / 2.0
+                    v.netForce = v.netForce + ((u.position - v.position) * attraction)
                 }
                 
                 v.velocity = (v.velocity + v.netForce) * velocity_scalar
