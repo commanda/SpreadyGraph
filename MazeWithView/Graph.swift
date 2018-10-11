@@ -11,15 +11,9 @@ import Foundation
 class Graph {
     var nodes: Set<MazeNode>!
     
-    let min: Int
-    let max: Int
-    
-    init(min: Int, max: Int) {
-        self.min = min
-        self.max = max
-    }
-    
     func generate() {
+        
+        guard let min = Constants.numNodesRange.min(), let max = Constants.numNodesRange.max() else { return }
         
         let numNodes = min + Int(arc4random_uniform(UInt32(max - min)))
         var collection = [MazeNode]()
@@ -112,6 +106,7 @@ class Graph {
     func carveMazeEverything() {
         for n in nodes {
             for s in n.siblings {
+                guard s.name != "9", n.name != "9" else { continue }
                 n.carvePassage(to: s)
             }
         }

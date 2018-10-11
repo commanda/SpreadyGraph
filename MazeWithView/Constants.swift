@@ -9,6 +9,9 @@
 import Foundation
 
 struct Constants {
+    
+    static let numNodesRange: ClosedRange<Int> = 10...40
+    
     static let drawVertexLabels = true
     static let drawVertices = true
     
